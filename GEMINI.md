@@ -19,8 +19,8 @@ This project is a production-ready backend API built with FastAPI. The architect
 ## Project Structure
 
 ```text
+pyproject.toml
 app/
-├── pyproject.toml
 ├── src/
 │   ├── __init__.py
 │   ├── main.py

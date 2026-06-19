@@ -2,6 +2,18 @@ GET http://localhost:8000/health
 
 ###
 
+GET http://localhost:8000/clear-redis
+
+###
+
+GET http://localhost:8000/rate-limited
+
+###
+
+GET http://localhost:8000/v1/logs
+
+###
+
 POST http://localhost:8000/v1/logs
 content-type: application/json
 
