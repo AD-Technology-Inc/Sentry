@@ -24,16 +24,15 @@ To get started with the Centralized Logging Service, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
-    cd <repo-directory>
+    git clone https://github.com/zerexei/centralize-logging-system
+    cd centralize-logging-system
     ```
 
 2.  **Install dependencies:**
-    This project uses `pip` for dependency management. Install the required packages using the `requirements.txt` file:
+    This project uses `uv` for dependency management. Install the required packages using the `pyproject.toml` file:
     ```bash
-    pip install -r requirements.txt
+    uv sync
     ```
-    (Note: The existing `README.md` specified `pip install fastapi uvicorn python-dotenv supabase`. Using `requirements.txt` is generally better practice if it exists, otherwise, the explicit command is fine. I'll assume `requirements.txt` is the intended way based on its presence in the directory listing).
 
 3.  **Run the server:**
     Use `uvicorn` to start the FastAPI application. The `--reload` flag is useful for development as it restarts the server on code changes.
