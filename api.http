@@ -1,0 +1,19 @@
+GET http://localhost:8000/health 
+
+###
+
+POST http://localhost:8000/v1/logs
+content-type: application/json
+
+{
+  "service": "payment-api",
+  "environment": "production",
+  "level": "INFO",
+  "log_message": "Payment processed successfully.",
+  "trace_id": "trc_c12e9f45",
+  "metadata": {
+    "transaction_id": "txn_784512",
+    "amount": 99.99,
+    "currency": "USD"
+  }
+}
