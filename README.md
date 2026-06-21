@@ -1,3 +1,71 @@
+# AD. Sentry
+
+## Overview
+
+A centralized logging, observability, and reporting platform designed to transform raw application events into actionable operational insights.
+
+The platform receives logs through a simple HTTP ingestion API, stores all events as immutable records, automatically categorizes related issues, observes trends and anomalies, and generates reports that help identify recurring problems, service degradation, and system health concerns.
+
+Instead of treating logs as isolated records, the platform groups and analyzes events to provide a higher-level understanding of what is happening across applications and services. This enables teams to move from simply collecting logs to understanding incidents, monitoring reliability, and making informed decisions.
+
+## Core Workflow
+
+1. Receive logs from applications and services through HTTP ingestion.
+2. Persist raw logs as immutable source-of-truth records.
+3. Categorize and group related events into issues.
+4. Observe trends, frequencies, severities, and correlations.
+5. Generate dashboards, alerts, and operational reports.
+
+## Key Capabilities
+
+* Centralized log collection
+* Immutable event storage
+* Automatic issue grouping
+* Event categorization
+* Observability and trend analysis
+* Incident reporting
+* Service health monitoring
+* Alert generation
+* Historical analytics
+
+The platform is built around a simple principle:
+
+> Every log is data, every issue is a signal, and every report is an opportunity to improve system reliability.
+
+
+
+```mermaid
+flowchart LR
+    A[Applications & Services]
+    B[HTTP Ingestion API]
+    C[Raw Log Storage]
+    D[Categorization Engine]
+    E[Observation Engine]
+    F[Reports]
+    G[Dashboards]
+    H[Alerts]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+
+    E --> F
+    E --> G
+    E --> H
+```
+
+One-Line Project Description
+
+A centralized observability platform that transforms raw logs into categorized issues, operational insights, alerts, and reliability reports.
+
+Short Tagline
+
+Collect. Categorize. Observe. Report.
+
+
+---
+
 # Centralized Logging Service
 
 A lightweight centralized logging service built with FastAPI and Supabase, allowing you to create, query, and manage logs from multiple services and environments.
