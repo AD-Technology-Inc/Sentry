@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { routes } from "@/routes/manifest";
 import AppLogo from "@/components/AppLogo";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const theme = localStorage.getItem("theme") || "dark";
     if (theme === "dark") {
@@ -29,7 +31,7 @@ export default function Login() {
         setAuthStep("redirecting");
         setTimeout(() => {
           localStorage.setItem("ad_sentry_user", JSON.stringify({ email, name: "Angelo Arcillas" }));
-          window.location.href = routes.dashboard.path;
+          navigate(routes.dashboard.path);
         }, 800);
       }, 1000);
     }, 1000);
