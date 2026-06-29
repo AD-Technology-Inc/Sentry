@@ -2,20 +2,20 @@
 
 ## Overview
 
-**AD. Sentry** is a production-ready centralized logging, observability, and reporting platform designed to transform raw application events into actionable operational insights. 
+**AD. Sentry** is a production-ready centralized logging, observability, and reliability reporting platform designed to transform raw application events into actionable operational insights. 
 
-The platform receives logs through a rate-limited, asynchronous HTTP ingestion API, persists all events as immutable records, automatically groups related log traces into high-level logical issues, monitors ingestion trends, and generates stability reports that outline system health and service SLA metrics.
+The platform receives logs through a rate-limited, asynchronous HTTP ingestion API, persists all events as immutable records, automatically groups related log traces into high-level logical issues, monitors ingestion trends, calculates risk scoring metrics via the **Reliability Audit Engine**, and generates downloadable PDF reports outlining system health and remediation schedules.
 
 ```mermaid
 flowchart LR
     A[Applications & Services] -->|HTTP Post Ingest| B[FastAPI Ingestion API]
     B -->|Rate Limiter / Cache| C[Redis Cache]
-    B -->|Async Client| D[Supabase / Postgres DB]
-    D -->|Grouping / Pattern Aggregation| E[Log Service]
+    B -->|Async Client| D[PostgreSQL / SQLite DB]
+    D -->|Grouping & Audit Engine| E[Log & Issue Service]
     E -->|Real-time Stats & Trends| F[React Dashboard]
-    E -->|Grouped Event Incidents| G[Issues Explorer]
+    E -->|Vulnerabilities & Risk Scores| G[Issues Explorer]
     E -->|Threshold Triggers| H[Alerts Center]
-    E -->|Reliability SLA Audits| I[SLA Reports]
+    E -->|Reliability SLA & PDF Exports| I[PDF Reports Export]
 ```
 
 Collect. Categorize. Observe. Report.
@@ -27,13 +27,14 @@ Collect. Categorize. Observe. Report.
 ### Backend
 - **Python 3.12+**
 - **FastAPI** (Asynchronous route handlers and CORS validation)
-- **SQLAlchemy 2.0 (Async)** & **Supabase/PostgreSQL** (Immutable event persistence)
+- **SQLAlchemy 2.0 (Async)** with **asyncpg** (PostgreSQL driver) and **aiosqlite** (local testing fallback)
 - **Redis** (Used for window-based request rate-limiting and route metadata caching)
+- **ReportLab** (Dynamic and structured PDF audit report generation)
 - **uv** (Fast package management)
 - **Pytest & HTTPX** (Async integrations and API endpoint testing)
 
 ### Frontend
-- **React 18** with **Vite** and **TypeScript**
+- **React 19** with **Vite** and **TypeScript**
 - **React Router Dom v6** (Asynchronous and lazy route rendering)
 - **Lucide React** (Consistent UI iconography)
 - **Custom CSS Theme Tokens** (Adaptive light/dark mode system)
@@ -45,21 +46,20 @@ Collect. Categorize. Observe. Report.
 The codebase enforces a strict **Domain-Driven Design (DDD)** structure to decouple framework adapters from business rules.
 
 ### Backend Structure (`app/src/`)
-- **Router Layer (`app/src/logs/router.py`)**: Thin FastAPI boundary handles request validation (Pydantic schemas) and HTTP responses.
-- **Service Layer (`app/src/logs/service.py`)**: Implements business rules (rate limits, trend aggregation, issue regex signatures, report compiling).
-- **Model Layer (`app/src/logs/models.py`)**: Defines ORM and schema properties.
-- **Database Client (`app/src/database.py`)**: Asynchronous database session engine. Falls back to a local `MockSupabaseClient` for sandboxed development when live credentials are empty or offline.
-- **Rate Limiter (`app/src/shared/rate_limiter.py`)**: Redis-backed rate limiter targeting route templates to prevent dynamic URL rate fragmentation.
+- **Logs Domain (`app/src/logs/`)**: Manages raw log ingestion, Redis rate limiting, and database event persistence.
+- **Issues Domain (`app/src/issues/`)**: Manages the **Reliability Audit Engine**, calculates issue threat risk scores, and compiles structured PDF audit reports via `ReportLab`.
+- **Database Client (`app/src/database.py`)**: Asynchronous database session engine. Connects to PostgreSQL, and automatically falls back to an in-memory `aiosqlite` database for sandboxed local testing.
+- **Rate Limiter (`app/src/shared/rate_limiter.py`)**: Redis-backed rate limiter targeting route templates to prevent rate limit fragmentation.
 
 ### Frontend Structure (`client/src/`)
 - **API Wrapper (`client/src/lib/api.ts`)**: Direct HTTP request bindings mapped to model payloads.
 - **Layout Shell (`client/src/components/Layout.tsx`)**: Global page shell containing the navigation menu, application info, and live Light/Dark mode state toggle.
 - **Pages (`client/src/pages/`)**:
-  - `Dashboard`: Interactive stats grid, 24h trend graph (custom SVG area rendering), and active service health meters.
+  - `Dashboard`: Interactive stats grid, 24h trend graph, and active service health meters.
   - `Logs Explorer`: High-performance log query grid with level badges, parent-child span trace viewer, and simulated ingest tool.
-  - `Issues Explorer`: Grouped errors showing event frequencies, first/last seen metrics, assignees, and resolution controls.
+  - `Issues Explorer`: Grouped errors showing event frequencies, threat risk scores, and resolution controls.
   - `Alerts Portal`: Rules configuration (Slack/Email trigger thresholds) and active alert status management.
-  - `Reports Portal`: Daily/Weekly SLA reports displaying overall MTTR, uptime tables, and operational audit logs.
+  - `Reports Portal`: Daily/Weekly stability reports and downloadable **PDF Reliability Audits** compiled by the engine.
 
 ---
 
@@ -67,40 +67,18 @@ The codebase enforces a strict **Domain-Driven Design (DDD)** structure to decou
 
 ### Prerequisites
 - Docker & Docker Compose
-- Node.js 18+ & npm
-- Python 3.12+ (managed with `uv`)
 
-### 1. Ingesting & Running Infrastructure
-Start Redis and PostgreSQL/Supabase services via Docker Compose:
+### Running the Stack
+Start the entire infrastructure (React frontend, FastAPI backend, Postgres, Redis, and Traefik reverse proxy) via Docker Compose:
+
 ```bash
-docker compose up -d
+docker compose up --build -d
 ```
 
-### 2. Backend Server Setup
-From the project root:
-1. Create a virtual environment and sync dependencies:
-   ```bash
-   uv venv
-   source .venv/bin/activate
-   uv sync
-   ```
-2. Create `app/.env` (configured automatically to point to Redis on `localhost:6379`).
-3. Run the FastAPI development server:
-   ```bash
-   uv run uvicorn app.src.main:app --reload --host 127.0.0.1 --port 8000
-   ```
-
-### 3. Frontend Client Setup
-From the `client/` subdirectory:
-1. Install node dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the Vite development server:
-   ```bash
-   npm run dev -- --host 127.0.0.1
-   ```
-3. Open `http://127.0.0.1:5173/` in your browser.
+Once started, the services will be accessible at:
+- **React Web Console**: http://app.localhost
+- **API Gateway**: http://api.localhost
+- **Traefik Control Plane**: http://localhost:8080
 
 ---
 
@@ -111,14 +89,14 @@ The FastAPI backend exposes the following RESTful endpoints:
 ### Ingestion & Querying
 - `POST /v1/logs` - Ingests a new log payload. Validates payload structure and applies rate limiting.
 - `GET /v1/logs` - Returns paginated, filterable raw log lines. Supports sorting, service filters, and level filtering.
-- `GET /v1/logs/{log_id}` - Retreives a specific log instance including its span traces.
+- `GET /v1/logs/{log_id}` - Retrieves a specific log instance including its span traces.
 
-### Analytics & Observability
+### Reliability Issues & Audits
+- `GET /v1/logs/issues` - Returns grouped issue lists aggregated by common message signatures, including threat-level risk scores.
+- `POST /v1/issues/export-pdf` - Evaluates current system health and compiles a downloadable PDF audit report.
 - `GET /v1/logs/stats` - Pulls overall count aggregates, active counts by service/environment, and error percentage rates.
 - `GET /v1/logs/trends` - Provides hourly time-series aggregation bucketed over the last 24 hours.
-- `GET /v1/logs/issues` - Returns grouped issue lists aggregated by common message signatures.
 - `GET /v1/logs/alerts` - Retrieves triggered active warnings matching alerting thresholds.
-- `GET /v1/logs/reports` - Compiles system SLA stability audits.
 
 ---
 
@@ -128,5 +106,5 @@ Pytest test suites are located in `app/tests/` and cover rate limiting, service 
 
 To run tests:
 ```bash
-PYTHONPATH=. pytest app/tests/
+PYTHONPATH=. UV_PROJECT_ENVIRONMENT=.venv_local uv run pytest app/tests/
 ```
