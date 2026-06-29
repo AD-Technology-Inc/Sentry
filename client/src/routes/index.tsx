@@ -23,101 +23,106 @@ const LoadingFallback = () => (
   </div>
 );
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: routes.welcome.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <Welcome />
+        </Suspense>
+      ),
+    },
+    {
+      path: routes.login.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <Login />
+        </Suspense>
+      ),
+    },
+    {
+      path: routes.signup.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <Signup />
+        </Suspense>
+      ),
+    },
+    {
+      path: routes.verifyEmail.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <VerifyEmail />
+        </Suspense>
+      ),
+    },
+    {
+      path: routes.forgotPassword.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <ForgotPassword />
+        </Suspense>
+      ),
+    },
+    {
+      path: routes.resetPassword.path,
+      element: (
+        <Suspense fallback={<LoadingFallback />}>
+          <ResetPassword />
+        </Suspense>
+      ),
+    },
+    {
+      element: <Layout />,
+      children: [
+        {
+          path: routes.dashboard.path,
+          element: (
+            <Suspense fallback={<LoadingFallback />}>
+              <Dashboard />
+            </Suspense>
+          ),
+        },
+        {
+          path: routes.logs.path,
+          element: (
+            <Suspense fallback={<LoadingFallback />}>
+              <LogsExplorer />
+            </Suspense>
+          ),
+        },
+        {
+          path: routes.issues.path,
+          element: (
+            <Suspense fallback={<LoadingFallback />}>
+              <IssuesList />
+            </Suspense>
+          ),
+        },
+        {
+          path: routes.alerts.path,
+          element: (
+            <Suspense fallback={<LoadingFallback />}>
+              <AlertsList />
+            </Suspense>
+          ),
+        },
+        {
+          path: routes.reports.path,
+          element: (
+            <Suspense fallback={<LoadingFallback />}>
+              <ReportsList />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+  ],
   {
-    path: routes.welcome.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <Welcome />
-      </Suspense>
-    ),
+    basename: import.meta.env.BASE_URL,
   },
-  {
-    path: routes.login.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <Login />
-      </Suspense>
-    ),
-  },
-  {
-    path: routes.signup.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <Signup />
-      </Suspense>
-    ),
-  },
-  {
-    path: routes.verifyEmail.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <VerifyEmail />
-      </Suspense>
-    ),
-  },
-  {
-    path: routes.forgotPassword.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <ForgotPassword />
-      </Suspense>
-    ),
-  },
-  {
-    path: routes.resetPassword.path,
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <ResetPassword />
-      </Suspense>
-    ),
-  },
-  {
-    element: <Layout />,
-    children: [
-      {
-        path: routes.dashboard.path,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <Dashboard />
-          </Suspense>
-        ),
-      },
-      {
-        path: routes.logs.path,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <LogsExplorer />
-          </Suspense>
-        ),
-      },
-      {
-        path: routes.issues.path,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <IssuesList />
-          </Suspense>
-        ),
-      },
-      {
-        path: routes.alerts.path,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <AlertsList />
-          </Suspense>
-        ),
-      },
-      {
-        path: routes.reports.path,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <ReportsList />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-]);
+);
 
 export function AppRouter() {
   return <RouterProvider router={router} />;
