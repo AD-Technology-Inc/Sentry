@@ -5,7 +5,8 @@ from app.src.shared.cache import redis
 
 async def _rate_limiter(request: Request, limit: int, window: int):
     ip = request.client.host if request.client else "unknown"
-    path = request.url.path
+    route = request.scope.get("route")
+    path = route.path if route else request.url.path
 
     key = f"rate:{ip}:{path}"
 
