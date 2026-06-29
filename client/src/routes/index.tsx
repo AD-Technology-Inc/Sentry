@@ -10,16 +10,69 @@ const LogsExplorer = lazy(() => import("@/pages/logs/Index"));
 const IssuesList = lazy(() => import("@/pages/issues/Index"));
 const AlertsList = lazy(() => import("@/pages/alerts/Index"));
 const ReportsList = lazy(() => import("@/pages/reports/Index"));
+const Welcome = lazy(() => import("@/pages/welcome/Index"));
+const Login = lazy(() => import("@/pages/auth/Login"));
+const Signup = lazy(() => import("@/pages/auth/Signup"));
+const VerifyEmail = lazy(() => import("@/pages/auth/VerifyEmail"));
+const ForgotPassword = lazy(() => import("@/pages/auth/ForgotPassword"));
+const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 
 const LoadingFallback = () => (
   <div className="flex h-64 w-full items-center justify-center">
-    <RefreshCw className="h-8 w-8 animate-spin text-indigo-500" />
+    <RefreshCw className="h-8 w-8 animate-spin text-primary" />
   </div>
 );
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: routes.welcome.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <Welcome />
+      </Suspense>
+    ),
+  },
+  {
+    path: routes.login.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <Login />
+      </Suspense>
+    ),
+  },
+  {
+    path: routes.signup.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <Signup />
+      </Suspense>
+    ),
+  },
+  {
+    path: routes.verifyEmail.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <VerifyEmail />
+      </Suspense>
+    ),
+  },
+  {
+    path: routes.forgotPassword.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <ForgotPassword />
+      </Suspense>
+    ),
+  },
+  {
+    path: routes.resetPassword.path,
+    element: (
+      <Suspense fallback={<LoadingFallback />}>
+        <ResetPassword />
+      </Suspense>
+    ),
+  },
+  {
     element: <Layout />,
     children: [
       {

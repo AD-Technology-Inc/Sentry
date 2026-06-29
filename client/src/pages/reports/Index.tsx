@@ -36,7 +36,7 @@ export default function ReportsList() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-indigo-500" />
+        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -66,7 +66,7 @@ export default function ReportsList() {
           <div key={report.id} className="card p-6 gap-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-indigo-500/10 rounded-lg text-indigo-500 border border-indigo-500/20">
+                <div className="p-2 bg-primary/10 rounded-lg text-primary border border-primary/20">
                   <FileText className="h-5 w-5" />
                 </div>
                 <div>
@@ -98,7 +98,7 @@ export default function ReportsList() {
                 </span>
                 <span
                   className={`text-lg font-bold mt-1 block ${
-                    report.incidents_count > 0 ? "text-rose-500" : "text-emerald-500"
+                    report.incidents_count > 0 ? "text-danger" : "text-success"
                   }`}
                 >
                   {report.incidents_count}
@@ -138,10 +138,10 @@ export default function ReportsList() {
                           <td
                             className={`text-right font-bold font-mono ${
                               parseFloat(uptimeStr) >= 99.9
-                                ? "text-emerald-500"
+                                ? "text-success"
                                 : parseFloat(uptimeStr) >= 99.0
-                                ? "text-amber-500"
-                                : "text-rose-500"
+                                ? "text-warning"
+                                : "text-danger"
                             }`}
                           >
                             {uptimeStr}

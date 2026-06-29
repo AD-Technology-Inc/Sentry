@@ -51,7 +51,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-indigo-500" />
+        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -120,7 +120,7 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header flex-row items-center justify-between pb-2">
             <span className="text-sm font-medium text-muted-foreground">Total Ingested Logs</span>
-            <Database className="h-4 w-4 text-indigo-500" />
+            <Database className="h-4 w-4 text-primary" />
           </div>
           <div className="card-content">
             <div className="text-3xl font-bold">{stats?.total_count || 0}</div>
@@ -132,10 +132,10 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header flex-row items-center justify-between pb-2">
             <span className="text-sm font-medium text-muted-foreground">System Error Rate</span>
-            <AlertOctagon className="h-4 w-4 text-rose-500" />
+            <AlertOctagon className="h-4 w-4 text-danger" />
           </div>
           <div className="card-content">
-            <div className="text-3xl font-bold text-rose-500">
+            <div className="text-3xl font-bold text-danger">
               {stats?.error_rate || 0}%
             </div>
             <p className="text-xs text-muted-foreground mt-1">Percentage of error/critical logs</p>
@@ -146,7 +146,7 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header flex-row items-center justify-between pb-2">
             <span className="text-sm font-medium text-muted-foreground">Active Services</span>
-            <Server className="h-4 w-4 text-emerald-500" />
+            <Server className="h-4 w-4 text-success" />
           </div>
           <div className="card-content">
             <div className="text-3xl font-bold">
@@ -160,10 +160,10 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header flex-row items-center justify-between pb-2">
             <span className="text-sm font-medium text-muted-foreground">Gateway Uptime</span>
-            <CheckCircle className="h-4 w-4 text-teal-500" />
+            <CheckCircle className="h-4 w-4 text-success" />
           </div>
           <div className="card-content">
-            <div className="text-3xl font-bold text-teal-500">
+            <div className="text-3xl font-bold text-success">
               {stats && stats.error_rate > 5 ? "98.84%" : "99.96%"}
             </div>
             <p className="text-xs text-muted-foreground mt-1">SLA target metrics (99.9%)</p>
@@ -175,11 +175,11 @@ export default function Dashboard() {
       <div className="card p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-indigo-500" />
+            <TrendingUp className="h-5 w-5 text-primary" />
             <h3 className="font-semibold text-lg">Event Ingestion Trends (24h)</h3>
           </div>
           {hoveredPoint && (
-            <span className="text-xs font-mono px-2 py-1 bg-indigo-500/10 text-indigo-500 rounded border border-indigo-500/20">
+            <span className="text-xs font-mono px-2 py-1 bg-primary/10 text-primary rounded border border-primary/20">
               {hoveredPoint.timestamp} — {hoveredPoint.total_count} events ({hoveredPoint.error_count} errors)
             </span>
           )}
@@ -269,10 +269,10 @@ export default function Dashboard() {
                     <div
                       className={`h-2.5 w-2.5 rounded-full ${
                         svc.status === "healthy"
-                          ? "bg-emerald-500 animate-pulse"
+                          ? "bg-success animate-pulse"
                           : svc.status === "degraded"
-                          ? "bg-amber-500 animate-pulse"
-                          : "bg-rose-500 animate-pulse"
+                          ? "bg-warning animate-pulse"
+                          : "bg-danger animate-pulse"
                       }`}
                     />
                     <div>
@@ -316,7 +316,7 @@ export default function Dashboard() {
               <h3 className="card-title text-base">Recurring Issues</h3>
               <p className="card-description">Top log anomalies categorized by count.</p>
             </div>
-            <Link to={routes.issues.path} className="text-xs text-indigo-500 hover:underline">
+            <Link to={routes.issues.path} className="text-xs text-primary hover:underline">
               View All
             </Link>
           </div>

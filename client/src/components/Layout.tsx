@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { routes } from "@/routes/manifest";
+import AppLogo from "@/components/AppLogo";
 import {
   Terminal,
   LayoutDashboard,
@@ -10,7 +11,6 @@ import {
   FileText,
   Sun,
   Moon,
-  Activity,
 } from "lucide-react";
 
 export default function Layout() {
@@ -37,10 +37,7 @@ export default function Layout() {
         <aside className="sidebar">
           <div className="sidebar-header">
             <NavLink to={routes.dashboard.path} className="navbar-brand">
-              <Activity className="h-5 w-5 text-indigo-500 animate-pulse" />
-              <span className="font-bold tracking-tight text-lg bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
-                AD. Sentry
-              </span>
+              <AppLogo />
             </NavLink>
           </div>
           
@@ -115,12 +112,12 @@ export default function Layout() {
             >
               {isDark ? (
                 <>
-                  <Sun className="h-4 w-4 text-amber-500" />
+                  <Sun className="h-4 w-4 text-warning" />
                   <span>Light Mode</span>
                 </>
               ) : (
                 <>
-                  <Moon className="h-4 w-4 text-slate-500" />
+                  <Moon className="h-4 w-4 text-muted-foreground" />
                   <span>Dark Mode</span>
                 </>
               )}
@@ -133,9 +130,9 @@ export default function Layout() {
       <div className="app-shell-main">
         <header className="app-shell-header justify-between">
           <div className="flex items-center gap-2">
-            <Terminal className="h-5 w-5 text-indigo-500" />
+            <Terminal className="h-5 w-5 text-primary" />
             <h1 className="font-semibold text-lg capitalize">
-              {location.pathname === "/"
+              {location.pathname === routes.dashboard.path
                 ? "Overview Dashboard"
                 : location.pathname.substring(1)}
             </h1>

@@ -126,7 +126,7 @@ export default function AlertsList() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-indigo-500" />
+        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -141,7 +141,7 @@ export default function AlertsList() {
         <div className="card">
           <div className="card-header pb-2">
             <h3 className="card-title text-sm flex items-center gap-2">
-              <Settings className="h-4 w-4 text-indigo-500" />
+              <Settings className="h-4 w-4 text-primary" />
               <span>Define Alert Rule</span>
             </h3>
           </div>
@@ -262,11 +262,11 @@ export default function AlertsList() {
                         className="text-[9px] px-1 py-0.25 bg-muted border rounded font-semibold text-muted-foreground flex items-center gap-0.5"
                       >
                         {chan === "Slack" ? (
-                          <MessageSquare className="h-2 w-2 text-pink-500" />
+                          <MessageSquare className="h-2 w-2 text-primary" />
                         ) : chan === "Email" ? (
-                          <Mail className="h-2 w-2 text-blue-500" />
+                          <Mail className="h-2 w-2 text-primary" />
                         ) : (
-                          <Smartphone className="h-2 w-2 text-indigo-500" />
+                          <Smartphone className="h-2 w-2 text-primary" />
                         )}
                         {chan}
                       </span>
@@ -278,7 +278,7 @@ export default function AlertsList() {
                   onClick={() => handleToggleRule(rule.id)}
                   className={`button text-xs py-0.5 px-2 cursor-pointer border-none rounded ${
                     rule.active
-                      ? "bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500/20"
+                      ? "bg-primary/10 text-primary hover:bg-primary/20"
                       : "bg-muted text-muted-foreground"
                   }`}
                   type="button"
@@ -297,7 +297,7 @@ export default function AlertsList() {
           <div className="card-header flex-row justify-between items-center pb-2">
             <div>
               <h3 className="card-title text-base flex items-center gap-2">
-                <Bell className="h-5 w-5 text-indigo-500" />
+                <Bell className="h-5 w-5 text-primary" />
                 <span>Active Incidents & Alerts</span>
               </h3>
               <p className="card-description">
@@ -318,7 +318,7 @@ export default function AlertsList() {
             {/* Active Alerts */}
             {activeAlerts.length > 0 && (
               <div className="flex flex-col gap-3">
-                <h4 className="text-xs font-bold text-rose-500 uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-danger uppercase tracking-wider">
                   Triggered ({activeAlerts.length})
                 </h4>
                 {activeAlerts.map((alt) => (
@@ -331,19 +331,19 @@ export default function AlertsList() {
                         <span className="alert-title text-sm font-bold">
                           {alt.title}: {alt.service}
                         </span>
-                        <span className="text-[10px] px-1.5 py-0.25 bg-rose-500/20 border border-rose-500/40 rounded font-semibold text-rose-500">
+                        <span className="text-[10px] px-1.5 py-0.25 bg-danger/20 border border-danger/40 rounded font-semibold text-danger">
                           {alt.severity}
                         </span>
                       </div>
                       <p className="alert-description mt-1 text-xs">{alt.description}</p>
-                      <span className="text-[10px] text-rose-500/70 font-mono mt-2 block">
+                      <span className="text-[10px] text-danger/70 font-mono mt-2 block">
                         Triggered: {new Date(alt.timestamp).toLocaleString()}
                       </span>
                     </div>
 
                     <button
                       onClick={() => handleResolveAlert(alt.id)}
-                      className="button bg-rose-500/10 hover:bg-rose-500/20 border-rose-500/30 text-rose-500 text-xs py-1 px-3 cursor-pointer flex items-center gap-1 ml-4"
+                      className="button bg-danger/10 hover:bg-danger/20 border-danger/30 text-danger text-xs py-1 px-3 cursor-pointer flex items-center gap-1 ml-4"
                       type="button"
                     >
                       <CheckCircle className="h-3.5 w-3.5" />
@@ -357,7 +357,7 @@ export default function AlertsList() {
             {/* Resolved Alerts */}
             {resolvedAlerts.length > 0 && (
               <div className="flex flex-col gap-3">
-                <h4 className="text-xs font-bold text-emerald-500 uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-success uppercase tracking-wider">
                   Resolved ({resolvedAlerts.length})
                 </h4>
                 {resolvedAlerts.map((alt) => (
@@ -367,17 +367,17 @@ export default function AlertsList() {
                   >
                     <div className="alert-content">
                       <div className="flex items-center gap-2">
-                        <span className="alert-title text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                        <span className="alert-title text-sm font-bold text-success">
                           {alt.title}: {alt.service}
                         </span>
-                        <span className="text-[10px] px-1.5 py-0.25 bg-emerald-500/15 border border-emerald-500/30 rounded font-semibold text-emerald-500">
+                        <span className="text-[10px] px-1.5 py-0.25 bg-success/15 border border-success/30 rounded font-semibold text-success">
                           RESOLVED
                         </span>
                       </div>
-                      <p className="alert-description mt-1 text-xs text-emerald-600/90 dark:text-emerald-400/90">
+                      <p className="alert-description mt-1 text-xs text-success/90">
                         {alt.description}
                       </p>
-                      <span className="text-[10px] text-emerald-500/70 font-mono mt-2 block">
+                      <span className="text-[10px] text-success/70 font-mono mt-2 block">
                         Acknowledge completed.
                       </span>
                     </div>

@@ -57,7 +57,7 @@ export default function IssuesList() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-indigo-500" />
+        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -89,10 +89,10 @@ export default function IssuesList() {
               key={issue.id}
               className={`card overflow-hidden border-l-4 transition-all hover:translate-x-1 ${
                 issue.status === "Resolved"
-                  ? "border-l-emerald-500 opacity-75"
+                  ? "border-l-success opacity-75"
                   : issue.level === "ERROR" || issue.level === "CRITICAL"
-                  ? "border-l-rose-500"
-                  : "border-l-amber-500"
+                  ? "border-l-danger"
+                  : "border-l-warning"
               }`}
             >
               <div className="card-header flex flex-col md:flex-row md:items-center justify-between gap-4 p-5">
@@ -129,7 +129,7 @@ export default function IssuesList() {
                       <span>Last seen: {new Date(issue.last_seen).toLocaleString()}</span>
                     </span>
                     {issue.assigned_to !== "Unassigned" ? (
-                      <span className="flex items-center gap-1 text-indigo-500 font-medium">
+                      <span className="flex items-center gap-1 text-primary font-medium">
                         <UserCheck className="h-3.5 w-3.5" />
                         <span>Assigned to {issue.assigned_to}</span>
                       </span>
@@ -156,7 +156,7 @@ export default function IssuesList() {
                       )}
                       <button
                         onClick={() => handleResolve(issue.id)}
-                        className="button bg-indigo-500 hover:bg-indigo-600 border-none text-white cursor-pointer text-xs py-1 px-3 flex items-center gap-1"
+                        className="button button-primary cursor-pointer text-xs py-1 px-3 flex items-center gap-1"
                         type="button"
                       >
                         <CheckCircle className="h-3 w-3" />

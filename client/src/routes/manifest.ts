@@ -1,7 +1,11 @@
 export const routes = {
+  welcome: {
+    name: "welcome",
+    path: "/",
+  },
   dashboard: {
     name: "dashboard",
-    path: "/",
+    path: "/dashboard",
   },
   logs: {
     name: "logs.index",
@@ -18,6 +22,26 @@ export const routes = {
   reports: {
     name: "reports.index",
     path: "/reports",
+  },
+  login: {
+    name: "auth.login",
+    path: "/login",
+  },
+  signup: {
+    name: "auth.signup",
+    path: "/signup",
+  },
+  verifyEmail: {
+    name: "auth.verify-email",
+    path: "/verify-email",
+  },
+  forgotPassword: {
+    name: "auth.forgot-password",
+    path: "/forgot-password",
+  },
+  resetPassword: {
+    name: "auth.reset-password",
+    path: "/reset-password",
   },
 } as const;
 
