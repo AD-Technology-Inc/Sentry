@@ -10,7 +10,7 @@ from app.src.shared.exceptions import LogNotFoundException, LogInsertionExceptio
 class LogService:
     @staticmethod
     async def create_log(log_data: LogCreate):
-        result = supabase.table("logs").insert(log_data.model_dump()).execute()
+        result = await supabase.table("logs").insert(log_data.model_dump()).execute()
         if not result.data:
             raise LogInsertionException("Failed to insert log")
 
@@ -43,7 +43,7 @@ class LogService:
         if level:
             query = query.eq("level", level)
 
-        result = query.execute()
+        result = await query.execute()
         await Cache.set(cache_key, json.dumps(result.data), expire_seconds=10) # reduced expire for faster frontend reactivity
         return result.data
 
@@ -54,7 +54,7 @@ class LogService:
             return json.loads(cached_data)
 
         response = (
-            supabase.table("logs").select("*").eq("id", log_id).single().execute()
+            await supabase.table("logs").select("*").eq("id", log_id).single().execute()
         )
         
         await Cache.set(f"log:{log_id}", json.dumps(response.data), expire_seconds=60)
@@ -63,10 +63,10 @@ class LogService:
     @staticmethod
     async def delete_log(log_id: str):
         response = (
-            supabase.table("logs").select("*").eq("id", log_id).single().execute()
+            await supabase.table("logs").select("*").eq("id", log_id).single().execute()
         )
         log = response.data
-        supabase.table("logs").delete().eq("id", log.get("id")).execute()
+        await supabase.table("logs").delete().eq("id", log.get("id")).execute()
         await Cache.forget("logs:service::level:")
         await Cache.forget(f"logs:service:{log.get('service')}:level:{log.get('level')}")
         await Cache.forget(f"log:{log.get('id')}")
@@ -83,7 +83,7 @@ class LogService:
         if cached_data:
             return json.loads(cached_data)
 
-        response = supabase.table("logs").select("*").execute()
+        response = await supabase.table("logs").select("*").execute()
         logs = response.data or []
         
         total_count = len(logs)
@@ -120,7 +120,7 @@ class LogService:
         if cached_data:
             return json.loads(cached_data)
 
-        response = supabase.table("logs").select("*").execute()
+        response = await supabase.table("logs").select("*").execute()
         logs = response.data or []
         
         now = datetime.now(timezone.utc)
@@ -171,7 +171,7 @@ class LogService:
         if cached_data:
             return json.loads(cached_data)
 
-        response = supabase.table("logs").select("*").execute()
+        response = await supabase.table("logs").select("*").execute()
         logs = response.data or []
         
         groups = {}
@@ -226,7 +226,7 @@ class LogService:
         if cached_data:
             return json.loads(cached_data)
 
-        response = supabase.table("logs").select("*").execute()
+        response = await supabase.table("logs").select("*").execute()
         logs = response.data or []
         
         now = datetime.now(timezone.utc)

@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8000/v1/logs";
+const API_BASE_URL = "http://localhost:8000/v1";
 
 export interface Log {
   id: string;
@@ -40,6 +40,28 @@ export interface Issue {
   assigned_to: string;
 }
 
+export interface IssueEvidence {
+  log_ids: string[];
+  request_ids: string[];
+}
+
+export interface AuditIssue {
+  id: string;
+  title: string;
+  category: string;
+  severity: string;
+  risk_score: number;
+  endpoint?: string;
+  method?: string;
+  scenario: string;
+  observed_behavior: string;
+  root_cause: string;
+  business_impact: string;
+  recommendations: string[];
+  evidence: IssueEvidence;
+  timestamp: string;
+}
+
 export interface Alert {
   id: string;
   service: string;
@@ -62,7 +84,7 @@ export interface Report {
 }
 
 export async function fetchApi<T>(path: string, options?: RequestInit): Promise<T> {
-  const url = path ? `${API_BASE_URL}${path}` : API_BASE_URL;
+  const url = `${API_BASE_URL}${path}`;
   const response = await fetch(url, {
     ...options,
     headers: {
@@ -89,43 +111,69 @@ export const api = {
     if (service) params.append("service", service);
     if (level) params.append("level", level);
     const queryString = params.toString() ? `?${params.toString()}` : "";
-    return fetchApi<Log[]>(queryString);
+    return fetchApi<Log[]>(`/logs${queryString}`);
   },
 
   getLog: (id: string): Promise<Log> => {
-    return fetchApi<Log>(`/${id}`);
+    return fetchApi<Log>(`/logs/${id}`);
   },
 
   createLog: (log: Omit<Log, "id" | "created_at">): Promise<Log> => {
-    return fetchApi<Log>("", {
+    return fetchApi<Log>("/logs", {
       method: "POST",
       body: JSON.stringify(log),
     });
   },
 
   deleteLog: (id: string): Promise<{ status: string }> => {
-    return fetchApi<{ status: string }>(`/${id}`, {
+    return fetchApi<{ status: string }>(`/logs/${id}`, {
       method: "DELETE",
     });
   },
 
   getStats: (): Promise<Stats> => {
-    return fetchApi<Stats>("/stats");
+    return fetchApi<Stats>("/logs/stats");
   },
 
   getTrends: (): Promise<TrendPoint[]> => {
-    return fetchApi<TrendPoint[]>("/trends");
+    return fetchApi<TrendPoint[]>("/logs/trends");
   },
 
   getIssues: (): Promise<Issue[]> => {
-    return fetchApi<Issue[]>("/issues");
+    return fetchApi<Issue[]>("/logs/issues");
+  },
+
+  getAuditIssues: (filters?: { id?: string; severity?: string; category?: string; endpoint?: string }): Promise<AuditIssue[]> => {
+    const params = new URLSearchParams();
+    if (filters) {
+      if (filters.id) params.append("id", filters.id);
+      if (filters.severity) params.append("severity", filters.severity);
+      if (filters.category) params.append("category", filters.category);
+      if (filters.endpoint) params.append("endpoint", filters.endpoint);
+    }
+    const queryString = params.toString() ? `?${params.toString()}` : "";
+    return fetchApi<AuditIssue[]>(`/issues${queryString}`);
+  },
+
+  exportAuditPdf: async (payload: { filters?: Record<string, any>; date_range?: Record<string, string>; issue_ids?: string[] }): Promise<Blob> => {
+    const response = await fetch(`${API_BASE_URL}/audit/export/pdf`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to export PDF");
+    }
+    return response.blob();
   },
 
   getAlerts: (): Promise<Alert[]> => {
-    return fetchApi<Alert[]>("/alerts");
+    return fetchApi<Alert[]>("/logs/alerts");
   },
 
   getReports: (): Promise<Report[]> => {
-    return fetchApi<Report[]>("/reports");
+    return fetchApi<Report[]>("/logs/reports");
   },
 };

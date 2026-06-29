@@ -1,4 +1,33 @@
 services:
+  traefik:
+    image: traefik:v3.6.8
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - app
+
+  app:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`app.localhost`)"
+      - "traefik.http.routers.app.entrypoints=web"
+      - "traefik.http.services.app.loadbalancer.server.port=5173"
+    networks:
+      - app
+    depends_on:
+      - api
+
   api:
     build:
       context: .
@@ -7,15 +36,25 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://sentry_user:sentry_password@postgres:5432/sentry_db
+      - REDIS_HOST=redis
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logging-api.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.logging-api.entrypoints=web"
+      - "traefik.http.services.logging-api.loadbalancer.server.port=8000"
     networks:
       - app
     depends_on:
       - redis
+      - postgres
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 300s
-      timeout: 10s
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
       retries: 3
+      start_period: 5s
 
   redis:
     image: redis:8.6.0-alpine3.23
@@ -30,9 +69,23 @@ services:
     networks:
       - app
 
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: sentry_user
+      POSTGRES_PASSWORD: sentry_password
+      POSTGRES_DB: sentry_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - data-postgres:/var/lib/postgresql/data
+    networks:
+      - app
+
 networks:
   app:
     driver: bridge
 
 volumes:
   data-redis:
+  data-postgres:

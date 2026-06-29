@@ -1,10 +1,19 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.src.shared.rate_limiter import rate_limiter
 from app.src.shared.cache import redis
 from app.src.logs.router import router as logs_router
+from app.src.issues.router import router as issues_router
+from app.src.database import init_db
 
-app = FastAPI(title="Centralized Logging Service")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize DB (creates PostgreSQL or SQLite tables if they do not exist)
+    await init_db()
+    yield
+
+app = FastAPI(title="Centralized Logging Service", lifespan=lifespan)
 
 # Add CORS Middleware to support frontend requests
 app.add_middleware(
@@ -16,6 +25,7 @@ app.add_middleware(
 )
 
 app.include_router(logs_router)
+app.include_router(issues_router)
 
 
 # --------------------
