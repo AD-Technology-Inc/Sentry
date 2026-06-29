@@ -56,7 +56,7 @@ export default function Signup() {
               <div className="card-header">
                 <h3 className="card-title text-xl font-bold font-sans">Create an account</h3>
                 <p className="card-description text-xs mt-1">
-                  Start monitoring your distributed systems with AD. Publish.
+                  Start monitoring your distributed systems with AD. Sentry.
                 </p>
               </div>
 
