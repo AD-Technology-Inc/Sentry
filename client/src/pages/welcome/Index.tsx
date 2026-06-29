@@ -11,6 +11,7 @@ import {
   Cpu,
   Database,
   ExternalLink,
+  FileText,
   Layers,
   Lock,
   MessageSquare,
@@ -29,7 +30,7 @@ export default function Welcome() {
       document.documentElement.classList.remove("dark");
     }
   }, []);
-  const [activeTab, setActiveTab] = useState<"ingest" | "group" | "trace">(
+  const [activeTab, setActiveTab] = useState<"ingest" | "group" | "trace" | "audit">(
     "ingest",
   );
 
@@ -283,6 +284,23 @@ export default function Welcome() {
                   microsecond latency tags.
                 </p>
               </button>
+
+              <button
+                onClick={() => setActiveTab("audit")}
+                className={`w-full text-left p-4 rounded-xl border transition-all cursor-pointer ${
+                  activeTab === "audit"
+                    ? "bg-primary/10 border-primary/35 text-primary shadow-md"
+                    : "bg-background border-border/80 hover:bg-zinc-900/40 text-muted-foreground"
+                }`}
+              >
+                <div className="font-semibold text-sm flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  <span>4. Reliability Audit & PDF Reports</span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Automate risk scoring (0-10) for issues and export structured PDF audit reports.
+                </p>
+              </button>
             </div>
 
             {/* Showcase Screen */}
@@ -297,6 +315,7 @@ export default function Welcome() {
                   {activeTab === "ingest" && "POST /v1/logs"}
                   {activeTab === "group" && "GROUP_ENGINE.py"}
                   {activeTab === "trace" && "TRACE_EXPLORER.tsx"}
+                  {activeTab === "audit" && "AUDIT_ENGINE.py"}
                 </span>
               </div>
 
@@ -355,7 +374,7 @@ export default function Welcome() {
                     </span>
                   </p>
                   <div className="p-2 border border-primary/20 bg-primary/5 rounded text-primary">
-                    <p className="font-semibold font-sans">
+                     <p className="font-semibold font-sans">
                       Grouped Issue Match Identified:
                     </p>
                     <p className="mt-1">
@@ -409,6 +428,38 @@ export default function Welcome() {
                       136ms
                     </span>
                   </div>
+                </div>
+              )}
+
+              {activeTab === "audit" && (
+                <div className="space-y-2 text-muted-foreground overflow-y-auto h-[230px]">
+                  <p className="text-success">
+                    // Reliability Audit Scorecard & Risk Assessment
+                  </p>
+                  <p>{"{"}</p>
+                  <p className="pl-4">
+                    "reliability_score": <span className="text-success">"89.2 / 100"</span>,
+                  </p>
+                  <p className="pl-4">
+                    "identified_issues": [
+                  </p>
+                  <p className="pl-8">
+                    {"{ \"id\": \"CRI-DI-001\", \"category\": \"DI\", \"risk_score\": 8.92 }"},
+                  </p>
+                  <p className="pl-8">
+                    {"{ \"id\": \"CRI-SEC-001\", \"category\": \"SEC\", \"risk_score\": 9.40 }"}
+                  </p>
+                  <p className="pl-4">
+                    ],
+                  </p>
+                  <p className="pl-4">
+                    "pdf_export_hash": <span className="text-primary">"sha256_ef920b7..."</span>,
+                  </p>
+                  <p className="pl-4">
+                    "actionable_remediation": <span className="text-warning">"Immediate: Add distributed lock on checkout endpoint."</span>
+                  </p>
+                  <p>{"}"}</p>
+                  <p className="text-success">// Click 'Export PDF' in the console for the full document</p>
                 </div>
               )}
             </div>
@@ -489,14 +540,13 @@ export default function Welcome() {
           {/* Card 5 */}
           <div className="p-6 rounded-xl border border-border bg-muted/20 hover:border-border transition-colors">
             <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary border border-primary/20 flex items-center justify-center mb-4">
-              <Activity className="h-5 w-5" />
+              <FileText className="h-5 w-5" />
             </div>
             <h3 className="font-semibold text-foreground text-base">
-              SLA & Uptime Auditing
+              Reliability Audit & PDF Reports
             </h3>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-              Compiles daily and weekly stability metrics. Calculates average
-              MTTR and tracks individual node availability percentages.
+              Dynamically groups logs into structured issues, calculates risk threat scores (0-10), and generates download-ready PDF reports with remediation timelines.
             </p>
           </div>
 
