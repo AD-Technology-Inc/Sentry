@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { routes } from "@/routes/manifest";
 import AppLogo from "@/components/AppLogo";
+import { Badge } from "@/components/ui/badge";
 
 export default function VerifyEmail() {
   useEffect(() => {
@@ -19,7 +20,9 @@ export default function VerifyEmail() {
   const email = emailParam;
   const [code, setCode] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [authStep, setAuthStep] = useState<"idle" | "verifying" | "success font-sans">("idle");
+  const [authStep, setAuthStep] = useState<
+    "idle" | "verifying" | "success font-sans"
+  >("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,8 +43,18 @@ export default function VerifyEmail() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_50%)] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative">
-        <Link to={routes.welcome.path} className="flex justify-center items-center mb-6 group">
+        <Link
+          to={routes.welcome.path}
+          className="flex justify-center items-center mb-6 group gap-2"
+        >
           <AppLogo />
+
+          <Badge
+            variant="outline"
+            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+          >
+            v0.1.0 - PRE-ALPHA
+          </Badge>
         </Link>
       </div>
 
@@ -50,9 +63,12 @@ export default function VerifyEmail() {
           {authStep === "idle" && (
             <form onSubmit={handleSubmit}>
               <div className="card-header">
-                <h3 className="card-title text-xl font-bold font-sans">Verify your email</h3>
+                <h3 className="card-title text-xl font-bold font-sans">
+                  Verify your email
+                </h3>
                 <p className="card-description text-xs mt-1">
-                  We've sent a verification code to your email. Enter it below to activate your account.
+                  We've sent a verification code to your email. Enter it below
+                  to activate your account.
                 </p>
               </div>
 
@@ -95,7 +111,9 @@ export default function VerifyEmail() {
             <div className="card-content flex flex-col items-center justify-center py-10 text-center gap-4">
               <RefreshCw className="h-10 w-10 animate-spin text-primary" />
               <div className="space-y-1">
-                <h4 className="font-semibold text-foreground font-sans">Verifying security payload...</h4>
+                <h4 className="font-semibold text-foreground font-sans">
+                  Verifying security payload...
+                </h4>
                 <p className="text-xs text-muted-foreground font-mono">
                   Performing cryptographic checks on verification signature
                 </p>
@@ -109,9 +127,14 @@ export default function VerifyEmail() {
                 ✓
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-foreground">Verification Complete</h3>
+                <h3 className="text-lg font-bold text-foreground">
+                  Verification Complete
+                </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                  Your email address <span className="text-foreground font-semibold">{email}</span> has been confirmed. You can now log into your console dashboard.
+                  Your email address{" "}
+                  <span className="text-foreground font-semibold">{email}</span>{" "}
+                  has been confirmed. You can now log into your console
+                  dashboard.
                 </p>
               </div>
               <Link

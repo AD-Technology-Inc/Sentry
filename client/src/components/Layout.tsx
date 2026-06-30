@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { routes } from "@/routes/manifest";
+
 import AppLogo from "@/components/AppLogo";
+import { Badge } from "@/components/ui/badge";
+
 import {
   Terminal,
   LayoutDashboard,
@@ -16,8 +19,10 @@ import {
 export default function Layout() {
   const location = useLocation();
   const [isDark, setIsDark] = useState(() => {
-    return document.documentElement.classList.contains("dark") || 
-      localStorage.getItem("theme") === "dark";
+    return (
+      document.documentElement.classList.contains("dark") ||
+      localStorage.getItem("theme") === "dark"
+    );
   });
 
   useEffect(() => {
@@ -40,7 +45,7 @@ export default function Layout() {
               <AppLogo />
             </NavLink>
           </div>
-          
+
           <div className="sidebar-content">
             <nav>
               <ul className="sidebar-menu">
@@ -137,12 +142,13 @@ export default function Layout() {
                 : location.pathname.substring(1)}
             </h1>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <span className="text-xs font-mono px-2 py-1 bg-muted rounded border text-muted-foreground">
-              v1.0.0
-            </span>
-          </div>
+
+          <Badge
+            variant="outline"
+            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+          >
+            v0.1.0 - PRE-ALPHA
+          </Badge>
         </header>
 
         <main className="app-shell-content">

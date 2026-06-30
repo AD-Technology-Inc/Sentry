@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { routes } from "@/routes/manifest";
 import AppLogo from "@/components/AppLogo";
+import { Badge } from "@/components/ui/badge";
 
 export default function Signup() {
   useEffect(() => {
@@ -19,7 +20,9 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [authStep, setAuthStep] = useState<"idle" | "creating" | "sending" | "success font-sans">("idle");
+  const [authStep, setAuthStep] = useState<
+    "idle" | "creating" | "sending" | "success font-sans"
+  >("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,8 +47,18 @@ export default function Signup() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_50%)] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative">
-        <Link to={routes.welcome.path} className="flex justify-center items-center mb-6 group">
+        <Link
+          to={routes.welcome.path}
+          className="flex justify-center items-center mb-6 group gap-2"
+        >
           <AppLogo />
+
+          <Badge
+            variant="outline"
+            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+          >
+            v0.1.0 - PRE-ALPHA
+          </Badge>
         </Link>
       </div>
 
@@ -54,7 +67,9 @@ export default function Signup() {
           {authStep === "idle" && (
             <form onSubmit={handleSubmit}>
               <div className="card-header">
-                <h3 className="card-title text-xl font-bold font-sans">Create an account</h3>
+                <h3 className="card-title text-xl font-bold font-sans">
+                  Create an account
+                </h3>
                 <p className="card-description text-xs mt-1">
                   Start monitoring your distributed systems with AD. Sentry.
                 </p>
@@ -138,11 +153,13 @@ export default function Signup() {
               <div className="space-y-1">
                 <h4 className="font-semibold text-foreground">
                   {authStep === "creating" && "Provisioning user workspace..."}
-                  {authStep === "sending" && "Sending 6-digit confirmation pin..."}
+                  {authStep === "sending" &&
+                    "Sending 6-digit confirmation pin..."}
                 </h4>
                 <p className="text-xs text-muted-foreground font-mono">
                   {authStep === "creating" && "Syncing credential signatures"}
-                  {authStep === "sending" && `Forwarding trace verification to ${email}`}
+                  {authStep === "sending" &&
+                    `Forwarding trace verification to ${email}`}
                 </p>
               </div>
             </div>
@@ -154,9 +171,14 @@ export default function Signup() {
                 ✓
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-foreground">Verification Email Sent</h3>
+                <h3 className="text-lg font-bold text-foreground">
+                  Verification Email Sent
+                </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                  We've sent a 6-digit confirmation pin to <span className="text-foreground font-semibold">{email}</span>. Please enter the code on the verification page to activate your workspace.
+                  We've sent a 6-digit confirmation pin to{" "}
+                  <span className="text-foreground font-semibold">{email}</span>
+                  . Please enter the code on the verification page to activate
+                  your workspace.
                 </p>
               </div>
               <Link
