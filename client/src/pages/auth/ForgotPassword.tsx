@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { routes } from "@/routes/manifest";
 import AppLogo from "@/components/AppLogo";
+import { Badge } from "@/components/ui/badge";
 
 export default function ForgotPassword() {
   useEffect(() => {
@@ -16,7 +17,9 @@ export default function ForgotPassword() {
 
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [authStep, setAuthStep] = useState<"idle" | "verifying" | "success font-sans">("idle");
+  const [authStep, setAuthStep] = useState<
+    "idle" | "verifying" | "success font-sans"
+  >("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +36,18 @@ export default function ForgotPassword() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_50%)] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative">
-        <Link to={routes.welcome.path} className="flex justify-center items-center mb-6 group">
+        <Link
+          to={routes.welcome.path}
+          className="flex justify-center items-center mb-6 group gap-2"
+        >
           <AppLogo />
+
+          <Badge
+            variant="outline"
+            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+          >
+            v0.1.0 - PRE-ALPHA
+          </Badge>
         </Link>
       </div>
 
@@ -47,13 +60,17 @@ export default function ForgotPassword() {
                   Recover Password
                 </h2>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Enter your email address and we will forward a temporary link to reset your password.
+                  Enter your email address and we will forward a temporary link
+                  to reset your password.
                 </p>
               </div>
 
               <div className="card-content space-y-4">
                 <div className="form-group space-y-1.5">
-                  <label htmlFor="email" className="form-label text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <label
+                    htmlFor="email"
+                    className="form-label text-xs font-semibold text-muted-foreground uppercase tracking-wider"
+                  >
                     Email Address
                   </label>
                   <input
@@ -108,9 +125,14 @@ export default function ForgotPassword() {
                 ✉
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-foreground font-sans">Recovery Link Forwarded</h3>
+                <h3 className="text-lg font-bold text-foreground font-sans">
+                  Recovery Link Forwarded
+                </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                  A reset link has been dispatched to <span className="text-foreground font-semibold">{email}</span>. Click on the link inside the message to define a new password.
+                  A reset link has been dispatched to{" "}
+                  <span className="text-foreground font-semibold">{email}</span>
+                  . Click on the link inside the message to define a new
+                  password.
                 </p>
               </div>
               <div className="flex flex-col gap-2">

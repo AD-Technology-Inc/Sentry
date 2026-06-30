@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { routes } from "@/routes/manifest";
 import AppLogo from "@/components/AppLogo";
+import { Badge } from "@/components/ui/badge";
 
 export default function ResetPassword() {
   useEffect(() => {
@@ -16,11 +17,13 @@ export default function ResetPassword() {
 
   const [searchParams] = useSearchParams();
   const emailParam = searchParams.get("email") || "";
-  
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [authStep, setAuthStep] = useState<"idle" | "updating" | "success font-sans">("idle");
+  const [authStep, setAuthStep] = useState<
+    "idle" | "updating" | "success font-sans"
+  >("idle");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,8 +45,18 @@ export default function ResetPassword() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.05),transparent_50%)] pointer-events-none" />
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative">
-        <Link to={routes.welcome.path} className="flex justify-center items-center mb-6 group">
+        <Link
+          to={routes.welcome.path}
+          className="flex justify-center items-center mb-6 group gap-2"
+        >
           <AppLogo />
+
+          <Badge
+            variant="outline"
+            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+          >
+            v0.1.0 - PRE-ALPHA
+          </Badge>
         </Link>
       </div>
 
@@ -52,9 +65,15 @@ export default function ResetPassword() {
           {authStep === "idle" && (
             <form onSubmit={handleSubmit}>
               <div className="card-header">
-                <h3 className="card-title text-xl font-bold font-sans">Reset password</h3>
+                <h3 className="card-title text-xl font-bold font-sans">
+                  Reset password
+                </h3>
                 <p className="card-description text-xs mt-1">
-                  Define a new secure password for <span className="text-foreground font-semibold">{emailParam}</span>.
+                  Define a new secure password for{" "}
+                  <span className="text-foreground font-semibold">
+                    {emailParam}
+                  </span>
+                  .
                 </p>
               </div>
 
@@ -98,7 +117,9 @@ export default function ResetPassword() {
             <div className="card-content flex flex-col items-center justify-center py-10 text-center gap-4">
               <RefreshCw className="h-10 w-10 animate-spin text-primary" />
               <div className="space-y-1">
-                <h4 className="font-semibold text-foreground">Updating security profiles...</h4>
+                <h4 className="font-semibold text-foreground">
+                  Updating security profiles...
+                </h4>
                 <p className="text-xs text-muted-foreground font-mono">
                   Hashing new credential payload values
                 </p>
@@ -112,9 +133,12 @@ export default function ResetPassword() {
                 ✓
               </div>
               <div className="space-y-2">
-                <h3 className="text-lg font-bold text-foreground font-sans">Password Updated</h3>
+                <h3 className="text-lg font-bold text-foreground font-sans">
+                  Password Updated
+                </h3>
                 <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                  Your security credentials have been refreshed. You can now use your new password to sign into the system console.
+                  Your security credentials have been refreshed. You can now use
+                  your new password to sign into the system console.
                 </p>
               </div>
               <Link

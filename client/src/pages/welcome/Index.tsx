@@ -21,6 +21,8 @@ import {
   Zap,
 } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
+
 export default function Welcome() {
   useEffect(() => {
     const theme = localStorage.getItem("theme") || "dark";
@@ -30,9 +32,9 @@ export default function Welcome() {
       document.documentElement.classList.remove("dark");
     }
   }, []);
-  const [activeTab, setActiveTab] = useState<"ingest" | "group" | "trace" | "audit">(
-    "ingest",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "ingest" | "group" | "trace" | "audit"
+  >("ingest");
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-primary-foreground">
@@ -42,7 +44,16 @@ export default function Welcome() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <AppLogo />
+          <div className="flex items-center gap-3">
+            <AppLogo />
+            <Badge
+              variant="outline"
+              className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
+            >
+              v0.1.0 - PRE-ALPHA
+            </Badge>
+          </div>
+
           <div className="flex items-center gap-4">
             <Link
               to={routes.login.path}
@@ -298,7 +309,8 @@ export default function Welcome() {
                   <span>4. Reliability Audit & PDF Reports</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Automate risk scoring (0-10) for issues and export structured PDF audit reports.
+                  Automate risk scoring (0-10) for issues and export structured
+                  PDF audit reports.
                 </p>
               </button>
             </div>
@@ -374,7 +386,7 @@ export default function Welcome() {
                     </span>
                   </p>
                   <div className="p-2 border border-primary/20 bg-primary/5 rounded text-primary">
-                     <p className="font-semibold font-sans">
+                    <p className="font-semibold font-sans">
                       Grouped Issue Match Identified:
                     </p>
                     <p className="mt-1">
@@ -438,28 +450,36 @@ export default function Welcome() {
                   </p>
                   <p>{"{"}</p>
                   <p className="pl-4">
-                    "reliability_score": <span className="text-success">"89.2 / 100"</span>,
+                    "reliability_score":{" "}
+                    <span className="text-success">"89.2 / 100"</span>,
                   </p>
-                  <p className="pl-4">
-                    "identified_issues": [
+                  <p className="pl-4">"identified_issues": [</p>
+                  <p className="pl-8">
+                    {
+                      '{ "id": "CRI-DI-001", "category": "DI", "risk_score": 8.92 }'
+                    }
+                    ,
                   </p>
                   <p className="pl-8">
-                    {"{ \"id\": \"CRI-DI-001\", \"category\": \"DI\", \"risk_score\": 8.92 }"},
+                    {
+                      '{ "id": "CRI-SEC-001", "category": "SEC", "risk_score": 9.40 }'
+                    }
                   </p>
-                  <p className="pl-8">
-                    {"{ \"id\": \"CRI-SEC-001\", \"category\": \"SEC\", \"risk_score\": 9.40 }"}
+                  <p className="pl-4">],</p>
+                  <p className="pl-4">
+                    "pdf_export_hash":{" "}
+                    <span className="text-primary">"sha256_ef920b7..."</span>,
                   </p>
                   <p className="pl-4">
-                    ],
-                  </p>
-                  <p className="pl-4">
-                    "pdf_export_hash": <span className="text-primary">"sha256_ef920b7..."</span>,
-                  </p>
-                  <p className="pl-4">
-                    "actionable_remediation": <span className="text-warning">"Immediate: Add distributed lock on checkout endpoint."</span>
+                    "actionable_remediation":{" "}
+                    <span className="text-warning">
+                      "Immediate: Add distributed lock on checkout endpoint."
+                    </span>
                   </p>
                   <p>{"}"}</p>
-                  <p className="text-success">// Click 'Export PDF' in the console for the full document</p>
+                  <p className="text-success">
+                    // Click 'Export PDF' in the console for the full document
+                  </p>
                 </div>
               )}
             </div>
@@ -546,7 +566,9 @@ export default function Welcome() {
               Reliability Audit & PDF Reports
             </h3>
             <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-              Dynamically groups logs into structured issues, calculates risk threat scores (0-10), and generates download-ready PDF reports with remediation timelines.
+              Dynamically groups logs into structured issues, calculates risk
+              threat scores (0-10), and generates download-ready PDF reports
+              with remediation timelines.
             </p>
           </div>
 
