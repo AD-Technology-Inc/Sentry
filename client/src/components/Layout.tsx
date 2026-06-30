@@ -136,7 +136,7 @@ export default function Layout() {
         <header className="app-shell-header justify-between">
           <div className="flex items-center gap-2">
             <Terminal className="h-5 w-5 text-primary" />
-            <h1 className="font-semibold text-lg capitalize">
+            <h1 className="font-semibold text-[10px] capitalize">
               {location.pathname === routes.dashboard.path
                 ? "Overview Dashboard"
                 : location.pathname.substring(1)}
