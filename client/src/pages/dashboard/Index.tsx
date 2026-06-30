@@ -51,7 +51,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+        <RefreshCw className="h-8 w-8 animate-spin text-accent" />
       </div>
     );
   }
@@ -120,7 +120,7 @@ export default function Dashboard() {
         <div className="card">
           <div className="card-header flex-row items-center justify-between pb-2">
             <span className="text-sm font-medium text-muted-foreground">Total Ingested Logs</span>
-            <Database className="h-4 w-4 text-primary" />
+            <Database className="h-4 w-4 text-accent" />
           </div>
           <div className="card-content">
             <div className="text-3xl font-bold">{stats?.total_count || 0}</div>
@@ -175,11 +175,11 @@ export default function Dashboard() {
       <div className="card p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
+            <TrendingUp className="h-5 w-5 text-accent" />
             <h3 className="font-semibold text-lg">Event Ingestion Trends (24h)</h3>
           </div>
           {hoveredPoint && (
-            <span className="text-xs font-mono px-2 py-1 bg-primary/10 text-primary rounded border border-primary/20">
+            <span className="text-xs font-mono px-2 py-1 bg-accent/10 text-accent rounded border border-accent/20">
               {hoveredPoint.timestamp} — {hoveredPoint.total_count} events ({hoveredPoint.error_count} errors)
             </span>
           )}
@@ -193,8 +193,8 @@ export default function Dashboard() {
             >
               <defs>
                 <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--color-primary)" stopOpacity={0.15} />
-                  <stop offset="100%" stopColor="var(--color-primary)" stopOpacity={0.0} />
+                  <stop offset="0%" stopColor="var(--color-accent)" stopOpacity={0.15} />
+                  <stop offset="100%" stopColor="var(--color-accent)" stopOpacity={0.0} />
                 </linearGradient>
               </defs>
 
@@ -220,7 +220,7 @@ export default function Dashboard() {
               <path
                 d={pathD}
                 fill="none"
-                stroke="var(--color-primary)"
+                stroke="var(--color-accent)"
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -233,8 +233,8 @@ export default function Dashboard() {
                   cx={p.x}
                   cy={p.y}
                   r={hoveredPoint?.timestamp === p.data.timestamp ? 5 : 3}
-                  fill={hoveredPoint?.timestamp === p.data.timestamp ? "var(--color-primary)" : "var(--background)"}
-                  stroke="var(--color-primary)"
+                  fill={hoveredPoint?.timestamp === p.data.timestamp ? "var(--color-accent)" : "var(--background)"}
+                  stroke="var(--color-accent)"
                   strokeWidth={2}
                   className="cursor-pointer transition-all"
                   onMouseEnter={() => setHoveredPoint(p.data)}
@@ -316,7 +316,7 @@ export default function Dashboard() {
               <h3 className="card-title text-base">Recurring Issues</h3>
               <p className="card-description">Top log anomalies categorized by count.</p>
             </div>
-            <Link to={routes.issues.path} className="text-xs text-primary hover:underline">
+            <Link to={routes.issues.path} className="text-xs text-accent hover:underline">
               View All
             </Link>
           </div>

@@ -126,7 +126,7 @@ export default function AlertsList() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+        <RefreshCw className="h-8 w-8 animate-spin text-accent" />
       </div>
     );
   }
@@ -141,7 +141,7 @@ export default function AlertsList() {
         <div className="card">
           <div className="card-header pb-2">
             <h3 className="card-title text-sm flex items-center gap-2">
-              <Settings className="h-4 w-4 text-primary" />
+              <Settings className="h-4 w-4 text-accent" />
               <span>Define Alert Rule</span>
             </h3>
           </div>
@@ -262,11 +262,11 @@ export default function AlertsList() {
                         className="text-[9px] px-1 py-0.25 bg-muted border rounded font-semibold text-muted-foreground flex items-center gap-0.5"
                       >
                         {chan === "Slack" ? (
-                          <MessageSquare className="h-2 w-2 text-primary" />
+                          <MessageSquare className="h-2 w-2 text-accent" />
                         ) : chan === "Email" ? (
-                          <Mail className="h-2 w-2 text-primary" />
+                          <Mail className="h-2 w-2 text-accent" />
                         ) : (
-                          <Smartphone className="h-2 w-2 text-primary" />
+                          <Smartphone className="h-2 w-2 text-accent" />
                         )}
                         {chan}
                       </span>
@@ -278,7 +278,7 @@ export default function AlertsList() {
                   onClick={() => handleToggleRule(rule.id)}
                   className={`button text-xs py-0.5 px-2 cursor-pointer border-none rounded ${
                     rule.active
-                      ? "bg-primary/10 text-primary hover:bg-primary/20"
+                      ? "bg-accent/10 text-accent hover:bg-accent/20"
                       : "bg-muted text-muted-foreground"
                   }`}
                   type="button"
@@ -297,7 +297,7 @@ export default function AlertsList() {
           <div className="card-header flex-row justify-between items-center pb-2">
             <div>
               <h3 className="card-title text-base flex items-center gap-2">
-                <Bell className="h-5 w-5 text-primary" />
+                <Bell className="h-5 w-5 text-accent" />
                 <span>Active Incidents & Alerts</span>
               </h3>
               <p className="card-description">

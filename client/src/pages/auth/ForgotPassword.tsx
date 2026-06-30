@@ -33,22 +33,17 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05),transparent_50%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(85,255,255,0.05),transparent_50%)] pointer-events-none" />
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative">
-        <Link
-          to={routes.welcome.path}
-          className="flex justify-center items-center mb-6 group gap-2"
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative flex justify-center items-center mb-6 gap-2">
+        <AppLogo />
+
+        <Badge
+          variant="outline"
+          className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
         >
-          <AppLogo />
-
-          <Badge
-            variant="outline"
-            className="text-[9px] font-mono py-0 px-2 rounded-full border-border text-muted-foreground bg-muted"
-          >
-            v0.1.0 - PRE-ALPHA
-          </Badge>
-        </Link>
+          v0.1.0 - PRE-ALPHA
+        </Badge>
       </div>
 
       <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-md relative">
@@ -96,7 +91,7 @@ export default function ForgotPassword() {
                 <div className="text-center pt-2">
                   <Link
                     to={routes.login.path}
-                    className="text-xs font-medium text-primary hover:underline"
+                    className="text-xs font-medium text-accent hover:underline"
                   >
                     Return to sign in
                   </Link>
@@ -107,7 +102,7 @@ export default function ForgotPassword() {
 
           {authStep === "verifying" && (
             <div className="card-content py-12 flex flex-col items-center justify-center space-y-4">
-              <RefreshCw className="h-10 w-10 animate-spin text-primary" />
+              <RefreshCw className="h-10 w-10 animate-spin text-accent" />
               <div className="text-center space-y-1">
                 <p className="text-sm font-semibold text-foreground font-sans">
                   Dispatching Email Link

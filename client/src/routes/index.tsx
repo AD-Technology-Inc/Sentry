@@ -19,7 +19,7 @@ const ResetPassword = lazy(() => import("@/pages/auth/ResetPassword"));
 
 const LoadingFallback = () => (
   <div className="flex h-64 w-full items-center justify-center">
-    <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+    <RefreshCw className="h-8 w-8 animate-spin text-accent" />
   </div>
 );
 

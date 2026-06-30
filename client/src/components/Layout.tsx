@@ -40,10 +40,8 @@ export default function Layout() {
       {/* Sidebar Section */}
       <div className="app-shell-sidebar">
         <aside className="sidebar">
-          <div className="sidebar-header">
-            <NavLink to={routes.dashboard.path} className="navbar-brand">
-              <AppLogo />
-            </NavLink>
+          <div className="sidebar-header flex items-center justify-between">
+            <AppLogo />
           </div>
 
           <div className="sidebar-content">
@@ -135,7 +133,7 @@ export default function Layout() {
       <div className="app-shell-main">
         <header className="app-shell-header justify-between">
           <div className="flex items-center gap-2">
-            <Terminal className="h-5 w-5 text-primary" />
+            <Terminal className="h-5 w-5 text-accent" />
             <h1 className="font-semibold text-[10px] capitalize">
               {location.pathname === routes.dashboard.path
                 ? "Overview Dashboard"

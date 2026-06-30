@@ -36,7 +36,7 @@ export default function ReportsList() {
   if (loading) {
     return (
       <div className="flex h-64 items-center justify-center">
-        <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+        <RefreshCw className="h-8 w-8 animate-spin text-accent" />
       </div>
     );
   }
@@ -66,7 +66,7 @@ export default function ReportsList() {
           <div key={report.id} className="card p-6 gap-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 bg-primary/10 rounded-lg text-primary border border-primary/20">
+                <div className="p-2 bg-accent/10 rounded-lg text-accent border border-accent/20">
                   <FileText className="h-5 w-5" />
                 </div>
                 <div>
