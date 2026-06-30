@@ -1,19 +1,10 @@
-import AppLogoIcon from "./AppLogoIcon";
+import { Link } from "react-router-dom";
+import { routes } from "@/routes/manifest";
 
 export default function AppLogo() {
   return (
-    <>
-      <div className="flex items-center gap-3">
-        <div className="flex aspect-square size-8 items-center justify-center text-foreground">
-          <AppLogoIcon className="size-5" />
-        </div>
-
-        <div className="ml-1 grid flex-1 text-left text-sm">
-          <span className="mb-0.5 truncate leading-tight font-semibold text-foreground">
-            AD. Sentry
-          </span>
-        </div>
-      </div>
-    </>
+    <Link to={routes.home.path} className="text-lg font-bold tracking-tighter text-foreground hover:text-foreground">
+      AD<span className="text-accent">.</span>
+    </Link>
   );
 }

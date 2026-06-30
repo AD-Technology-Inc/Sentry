@@ -121,7 +121,7 @@ export default function IssuesList() {
       case "LOW":
         return "badge-success text-success bg-success/10 border-success/25";
       default:
-        return "badge-primary text-primary bg-primary/10 border-primary/25";
+        return "badge-accent text-accent bg-accent/10 border-accent/25";
     }
   };
 
@@ -148,7 +148,7 @@ export default function IssuesList() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-            <ShieldAlert className="h-6 w-6 text-primary" />
+            <ShieldAlert className="h-6 w-6 text-accent" />
             Reliability Audit Explorer
           </h2>
           <p className="text-muted-foreground text-sm">
@@ -229,7 +229,7 @@ export default function IssuesList() {
               placeholder="Search Issue ID..."
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-primary font-mono"
+              className="w-full pl-9 pr-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-accent font-mono"
             />
           </div>
 
@@ -237,7 +237,7 @@ export default function IssuesList() {
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-primary"
+            className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-accent"
           >
             <option value="">All Severities</option>
             <option value="CRI">Critical (CRI)</option>
@@ -249,7 +249,7 @@ export default function IssuesList() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-primary"
+            className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-accent"
           >
             <option value="">All Categories</option>
             <option value="DI">Data Integrity (DI)</option>
@@ -266,7 +266,7 @@ export default function IssuesList() {
               placeholder="Filter by Endpoint..."
               value={endpointFilter}
               onChange={(e) => setEndpointFilter(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-primary"
+              className="w-full px-3 py-1.5 text-sm rounded bg-background border border-border text-foreground focus:outline-none focus:border-accent"
             />
             {endpointFilter && (
               <button
@@ -303,7 +303,7 @@ export default function IssuesList() {
 
           {loading ? (
             <div className="flex h-64 items-center justify-center card bg-background border border-border">
-              <RefreshCw className="h-8 w-8 animate-spin text-primary" />
+              <RefreshCw className="h-8 w-8 animate-spin text-accent" />
             </div>
           ) : issues.length > 0 ? (
             <div className="flex flex-col gap-3 overflow-y-auto max-h-[600px] pr-1">
@@ -313,8 +313,8 @@ export default function IssuesList() {
                   onClick={() => setSelectedIssue(issue)}
                   className={`card text-left transition-all p-4 border border-border cursor-pointer flex flex-col gap-2 ${
                     selectedIssue?.id === issue.id
-                      ? "ring-1 ring-primary bg-primary/5 border-primary/45"
-                      : "hover:border-primary/45"
+                      ? "ring-1 ring-accent bg-accent/5 border-accent/45"
+                      : "hover:border-accent/45"
                   }`}
                   type="button"
                 >
@@ -405,7 +405,7 @@ export default function IssuesList() {
                 <div className="flex flex-col gap-1">
                   <span className="text-xs text-muted-foreground uppercase font-semibold">Incident Endpoint</span>
                   <span className="font-mono text-sm font-bold text-foreground">
-                    <span className="text-primary mr-1.5">{selectedIssue.method}</span>
+                    <span className="text-accent mr-1.5">{selectedIssue.method}</span>
                     {selectedIssue.endpoint || "N/A"}
                   </span>
                 </div>
@@ -422,7 +422,7 @@ export default function IssuesList() {
               <div className="flex flex-col gap-4">
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Layers className="h-4 w-4 text-primary" />
+                    <Layers className="h-4 w-4 text-accent" />
                     Operational Scenario
                   </h4>
                   <p className="text-sm text-foreground font-medium">{selectedIssue.scenario}</p>
@@ -430,7 +430,7 @@ export default function IssuesList() {
 
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Activity className="h-4 w-4 text-primary" />
+                    <Activity className="h-4 w-4 text-accent" />
                     Observed System Behavior
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{selectedIssue.observed_behavior}</p>
@@ -438,7 +438,7 @@ export default function IssuesList() {
 
                 <div>
                   <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Cpu className="h-4 w-4 text-primary" />
+                    <Cpu className="h-4 w-4 text-accent" />
                     Root Cause Diagnosis
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{selectedIssue.root_cause}</p>
@@ -474,7 +474,7 @@ export default function IssuesList() {
               {/* Supporting Telemetry Hash Evidence */}
               <div className="flex flex-col gap-3 border-t border-border pt-4">
                 <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
-                  <Terminal className="h-4 w-4 text-primary" />
+                  <Terminal className="h-4 w-4 text-accent" />
                   Audit Trace Evidence (Log Hashes & Spans)
                 </h4>
                 <div className="bg-muted p-4 rounded border border-border font-mono text-[11px] text-muted-foreground flex flex-col gap-2 max-h-[150px] overflow-y-auto">

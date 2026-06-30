@@ -3,6 +3,10 @@ export const routes = {
     name: "welcome",
     path: "/",
   },
+  home: {
+    name: "home",
+    path: "/",
+  },
   dashboard: {
     name: "dashboard",
     path: "/dashboard",
